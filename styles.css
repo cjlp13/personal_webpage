@@ -100,7 +100,8 @@ h1 {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(var(--item-size), 1fr));
   gap: var(--space-md);
-  place-items: center;
+  justify-items: center;
+  align-items: center;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   backdrop-filter: blur(10px);
   position: relative;
@@ -133,6 +134,8 @@ h1 {
   cursor: pointer;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
+  justify-self: center;
+  align-self: center;
 }
 
 .item::before {
@@ -200,6 +203,8 @@ h1 {
   grid-column: 1 / -1;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
+  justify-self: center;
+  align-self: center;
 }
 
 #long-item::before {
@@ -243,13 +248,24 @@ h1 {
   left: 50%;
   transform: translate(-50%, -50%);
   margin: 0;
-  pointer-events: none;
-  z-index: -1;
+  pointer-events: auto;
+  z-index: 1;
   white-space: nowrap;
-  animation: breathe 4s ease-in-out infinite;
+  animation: breathe-dramatic 3s ease-in-out infinite;
+  cursor: pointer;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-@keyframes breathe {
+/* Enhanced hover state for PASSION text */
+#front-watermark:hover {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1.15);
+  text-shadow: 0px 0px 30px rgb(12, 69, 75), 0px 0px 60px rgba(18, 235, 255, 0.6), 0px 0px 90px rgba(18, 235, 255, 0.4);
+  filter: drop-shadow(0 0 20px rgba(18, 235, 255, 0.8));
+}
+
+/* More dramatic breathe animation */
+@keyframes breathe-dramatic {
   0%,
   100% {
     opacity: 0.6;
@@ -259,6 +275,20 @@ h1 {
     opacity: 0.8;
     transform: translate(-50%, -50%) scale(1.02);
   }
+}
+
+/* Dim all items when PASSION text is hovered */
+.outer-container:has(#front-watermark:hover) .item,
+.outer-container:has(#front-watermark:hover) #long-item {
+  opacity: 0.2;
+  filter: blur(3px);
+  transform: scale(0.95);
+}
+
+/* Dim vision containers when PASSION text is hovered */
+.outer-container:has(#front-watermark:hover) .vision-container {
+  opacity: 0.3;
+  transform: translateY(0);
 }
 
 /* Enhanced modal with better responsive behavior */
